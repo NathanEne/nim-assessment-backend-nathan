@@ -71,4 +71,13 @@ const put = async (id, body) => {
   }
 };
 
-module.exports = { getAll, getOne, create, put, MenuItems };
+const remove = async (id) => {
+  try {
+    MenuItems.deleteOne(id);
+    return id;
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { getAll, getOne, create, put, remove, MenuItems };

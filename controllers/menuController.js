@@ -30,11 +30,19 @@ const create = async (req, res) => {
 const put = async (req, res) => {
   try {
     const menu = await MenuItems.put(req.params.id, req.body);
-    console.log("HELLO ITS HERE", menu);
     res.send(menu);
   } catch (error) {
     res.status(500).send(error);
   }
 };
 
-module.exports = { getAll, getOne, create, put };
+const remove = async (req, res) => {
+  try {
+    const menu = await MenuItems.remove(req.params.id);
+    res.send(menu);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+module.exports = { getAll, getOne, create, put, remove };
