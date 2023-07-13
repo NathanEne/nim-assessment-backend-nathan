@@ -80,4 +80,20 @@ const remove = async (id) => {
   }
 };
 
-module.exports = { getAll, getOne, create, put, remove, MenuItems };
+const search = async (q) => {
+  const regex = new RegExp(q);
+  try {
+    const items = MenuItems.find({
+      $or: [
+        { description: { $regex: regex, $options: "i" } },
+        { name: { $regex: regex, $options: "i" } }
+      ]
+    });
+
+    return items;
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { getAll, getOne, create, put, remove, search, MenuItems };

@@ -75,14 +75,34 @@ describe("routes", () => {
 
   // search /api/menu/search?q=chicken
   describe("GET /api/menu/search", () => {
-    it("should return an array of menu items", async () => {
-      // create a menu item with the word "chicken" in the description
-      await MenuItems.create(testMenuItem);
-      const response = await request(server).get("/api/menu/search?q=chicken");
-      expect(response.body).toBeInstanceOf(Array);
-      expect(response.body[0].description).toBe(
-        "test description it has chicken"
-      );
+    describe("searching by description", () => {
+      it("should return an array of menu items", async () => {
+        // create a menu item with the word "chicken" in the description
+        await MenuItems.create(testMenuItem);
+        const response = await request(server).get(
+          "/api/menu/search?q=chicken"
+        );
+        expect(response.body).toBeInstanceOf(Array);
+        expect(response.body[0].description).toBe(
+          "test description it has chicken"
+        );
+      });
+    });
+    describe("searching by name", () => {
+      it("should return an array of menu items", async () => {
+        // create a menu item with the word "chicken" in the description
+        await MenuItems.create(testMenuItem);
+        const response = await request(server).get("/api/menu/search?q=test");
+        expect(response.body).toBeInstanceOf(Array);
+        expect(response.body[0].name).toBe("test");
+      });
+      it("should not duplicate", async () => {
+        // create a menu item with the word "chicken" in the description
+        await MenuItems.create(testMenuItem);
+        const response = await request(server).get("/api/menu/search?q=test");
+        expect(response.body).toBeInstanceOf(Array);
+        expect(response.body.length).toBe(1);
+      });
     });
   });
 
