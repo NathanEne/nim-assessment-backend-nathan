@@ -27,4 +27,14 @@ const create = async (req, res) => {
   }
 };
 
-module.exports = { getAll, getOne, create };
+const put = async (req, res) => {
+  try {
+    const menu = await MenuItems.put(req.params.id, req.body);
+    console.log("HELLO ITS HERE", menu);
+    res.send(menu);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+module.exports = { getAll, getOne, create, put };
