@@ -77,8 +77,8 @@ const remove = async (id) => {
   return order.id;
 };
 
-const getByStatus = async (status) => {
-  const orders = await Order.find({ status }).populate("items");
+const getByStatus = async (s) => {
+  const orders = await Order.find({ status: s }).populate("items");
   return orders;
 };
 
