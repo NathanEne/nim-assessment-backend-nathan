@@ -82,6 +82,28 @@ const getByStatus = async (status) => {
   return orders;
 };
 
+const price = (order) => {
+  /* eslint-disable no-param-reassign */
+  const sum = order.items.reduce((current, item) => {
+    current += item.quantity * item.item.price;
+    return current;
+  }, 0);
+  /* eslint-disable no-param-reassign */
+
+  return sum;
+};
+
+const totalSales = async () => {
+  const arr = await Order.find().populate("items.item");
+  /* eslint-disable no-param-reassign */
+  const total = arr.reduce((workingTotal, elem) => {
+    workingTotal += price(elem);
+    return workingTotal;
+  }, 0);
+  /* eslint-disable no-param-reassign */
+  return total;
+};
+
 module.exports = {
   getAll,
   getOne,
@@ -89,5 +111,6 @@ module.exports = {
   update,
   remove,
   getByStatus,
+  totalSales,
   Order
 };
